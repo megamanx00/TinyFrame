@@ -29,7 +29,7 @@ class CopyFillHelper
         $height = (int) $height;
         if($height < 1)
         {
-            throw new Exception('Height must be an integer greater 0');
+            throw new \Exception('Height must be an integer greater 0');
         }
         $this->targetHeight = $height;
     }
@@ -42,7 +42,7 @@ class CopyFillHelper
         $width = (int) $width;
         if($width < 1)
         {
-            throw new Exception('Height must be an integer greater 0');
+            throw new \Exception('Height must be an integer greater 0');
         }
         $this->targetWidth = $width;
     }
@@ -65,7 +65,7 @@ class CopyFillHelper
      * Resize source file to target file with previously set dimensions
      * @param string $source_file. File to resize
      * @param string $target_file.
-     * @throws exception. Throws when dir of target file does not exist and function can not create it.
+     * @throws \Exception. Throws when dir of target file does not exist and function can not create it.
      * */
     public function copy_fill($source_file, $target_file)
     {
@@ -76,7 +76,7 @@ class CopyFillHelper
             // Create the directory recursively
             if (!mkdir($basedir, 0777, true))
             {
-                throw new Exception("Could not create the folder : {$basedir}");
+                throw new \Exception("Could not create the folder : {$basedir}");
             }
         }
 

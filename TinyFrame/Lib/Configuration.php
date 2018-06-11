@@ -44,14 +44,14 @@ class Configuration
     {
         if(is_null($configFile))
         {
-            $this->configFile = realpath(self::DEFAULT_DIRECTORY . self::DEFAULT_CONFIG, $recursive);
+            $this->configFile = realpath(self::DEFAULT_DIRECTORY . self::DEFAULT_CONFIG);
         }
         else
         {
-            $this->configFile = realpath($configFile, $recursive);
+            $this->configFile = realpath($configFile);
         }
 
-        $this->loadConfigFromFile($this->configFile);
+        $this->loadConfigFromFile($this->configFile, $recursive);
     }
 
 

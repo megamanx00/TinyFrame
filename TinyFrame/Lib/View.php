@@ -25,12 +25,35 @@ class View
     private $__viewDir;
 
     /**
+     * Base URL for webViews
+     *
+     * @var string
+     */
+    private $__baseURL;
+
+    /**
+     * Container for view variables
+     *
+     * @var array
+     */
+    private static $__container;
+
+
+
+    /**
      * Create view object and set base directory
      * @param string $baseDir
+     * @param string $baseURL
      */
-    public function __construct($baseDir)
+    public function __construct($baseDir, $baseURL)
     {
         $this->__viewDir = $baseDir;
+        $this->__baseURL = $baseURL;
+
+        if(is_null(self::$__container))
+        {
+            self::$__container = array();
+        }
     }
 
     /**
@@ -50,8 +73,14 @@ class View
 
         if(!empty($variables))
         {
+            self::$__container = array_merge(self::$__container, $variables);
+        }
+
+        if(!empty(self::$__container))
+        {
             //Create variables for our view
-            foreach($variables as $key=>$var)
+            //@todo: move to array access interface and overide get rather than wasting memory due to scope concerns in sub views.
+            foreach(self::$__container as $key=>$var)
             {
                 $$key = $key == '__view' ? : $var;
             }
@@ -78,5 +107,14 @@ class View
 
         $temp = strtolower(substr("$fileName", -1, 4));
         return $temp == '.php';
+    }
+
+    /**
+     * Return baseurl. Useful for webviews
+     * @return string
+     * */
+    public function getBaseUrl()
+    {
+        return $this->__baseURL;
     }
 }

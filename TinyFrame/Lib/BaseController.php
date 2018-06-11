@@ -89,7 +89,8 @@ abstract class BaseController
 
         //Set Object for view
         $viewDir  = BASE_DIR . $this->config->getValue('environment.view_folder');
-        $this->view = new View($viewDir);
+        $baseURL = $this->config->getValue('environment.base_url');
+        $this->view = new View($viewDir, $baseURL);
     }
 
     /* Flush output buffer and set header */
