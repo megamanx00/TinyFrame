@@ -60,7 +60,7 @@ class View
      * Load a view file and set variables passed to the view. View files can load more views and pass variables to those
      * partial files.
      *
-     * @param string $baseDir
+     * @param string $__view
      * @param array $variables
      */
     public function loadView($__view, $variables = array())
@@ -110,11 +110,41 @@ class View
     }
 
     /**
-     * Return baseurl. Useful for webviews
+     * Return baseurl. Useful for web views
+     *
+     * @param $url string
      * @return string
      * */
-    public function getBaseUrl()
+    public function getBaseUrl($url = null)
     {
+        if(!is_null($url))
+        {
+            if($url[0] !== '/')
+            {
+                $url = '/' . $url;
+            }
+            return $this->__baseURL . $url;
+        }
         return $this->__baseURL;
+    }
+
+    public function selectBox(array $options, $id="",$name="", $cssClass="", $selectedValue="")
+    {
+        $output = ' ';
+
+
+        $output.="<select name='$name' id='$id' class='$cssClass'>\n";
+
+
+
+        foreach($options as $k=>$v)
+        {
+            $selected = ($selectedValue == $k) ? ' selected="selected"' : '';
+            $output.='  <option value="' . $k . '"' . $selected . '>' . $v . '</option>';
+        }
+
+        $output.="</select>\n";
+
+        echo $output;
     }
 }

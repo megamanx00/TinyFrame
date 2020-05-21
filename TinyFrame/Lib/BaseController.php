@@ -69,6 +69,12 @@ abstract class BaseController
     protected $view;
 
     /**
+     * Base URL
+     * */
+
+    protected $baseUrl;
+
+    /**
      * Construct starts output buffering, and sets some values for child classes to use. Also sets the configuration object.
      * To use a different configuration object overload in the child class. Child classes can also set a config file
      * different from the default.
@@ -84,13 +90,13 @@ abstract class BaseController
         $this->requestType = $requestType;
 
         //Assume everything is going to be OK
-        $this->responseCode = '200';
+        $this->responseCode = 200;
         $this->responseReason = 'OK';
 
         //Set Object for view
         $viewDir  = BASE_DIR . $this->config->getValue('environment.view_folder');
-        $baseURL = $this->config->getValue('environment.base_url');
-        $this->view = new View($viewDir, $baseURL);
+        $this->baseUrl = $this->config->getValue('environment.base_url');
+        $this->view = new View($viewDir, $this->baseUrl);
     }
 
     /* Flush output buffer and set header */
@@ -99,7 +105,7 @@ abstract class BaseController
         $outputBuffer = ob_get_contents();
         ob_end_clean();
 
-        header($this->responseReason, true, $this->responseCode);
+        header( 'HTTP/1.1 ' . $this->responseCode .  ' ' . $this->responseReason . ' ', true, (int) $this->responseCode);
         echo $outputBuffer;
     }
 
